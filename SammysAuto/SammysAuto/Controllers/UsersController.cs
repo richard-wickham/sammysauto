@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SammysAuto.Data;
 using SammysAuto.Models;
+using SammysAuto.Utility;
 
 namespace SammysAuto.Controllers
 {
+    [Authorize (Roles = SD.AdminEndUser)]
     public class UsersController : Controller
     {
 
@@ -130,8 +133,29 @@ namespace SammysAuto.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed (string id)
         {
+            // gets the user object to be deleted
             var userInDb = await _db.Users.SingleOrDefaultAsync(u => u.Id == id);
-            _db.Remove(userInDb);
+
+            // gets all the cars that belong to the user
+            var cars = _db.Cars.Where(x => x.UserId == userInDb.Id);
+
+            // load the cars into a list 
+            List<Car> listCar = cars.ToList();
+
+            // iterate through each car to remove the services for that car
+            foreach (var car in listCar)
+            {
+                var services = _db.Services.Where(x => x.CarId == car.Id);
+
+                // removes all the services for the car
+                _db.Services.RemoveRange(services);
+            }
+
+            // removes all the cars associated to this user
+            _db.Cars.RemoveRange(cars);
+
+            // finally removes the user
+            _db.Users.Remove(userInDb);
 
             await _db.SaveChangesAsync();
 

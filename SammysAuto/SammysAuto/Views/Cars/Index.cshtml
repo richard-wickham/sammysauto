@@ -10,7 +10,7 @@
 
 <div class="row" style="padding-bottom:80px;">
     <div class="col-sm-6" style="padding-bottom:80px;">
-        @* Add create new car button*@
+        @* Create new car button*@
         <a asp-action="Create" asp-route-userId="@Model.UserObj.Id" class="btn btn-primary" style="width:150px;">Add New Car</a>
     </div>
     <div class="col-sm-6">
@@ -99,7 +99,7 @@ else
                 </td>
                 @if (User.IsInRole(SD.CustomerEndUser))
                 {
-                    <td style="width:100%;">
+                    <td style="width:100px;">
                         <a class="btn btn-primary btn-sm" asp-controller="Services" asp-action="Index" asp-route-carId="@item.Id">
                             <span class="glyphicon glyphicon-wrench"> </span>&nbsp;Service History
                         </a>
@@ -108,7 +108,7 @@ else
                 else
                 {
                     <td style="width:100px;">
-                        <a class="btn btn-success btn-sm" asp-controller="Services" asp-action="Index" asp-route-carId="@item.Id">
+                        <a class="btn btn-success btn-sm" asp-controller="Services" asp-action="Create" asp-route-carId="@item.Id">
                             <span class="glyphicon glyphicon-plus"> </span>&nbsp;New Service
                         </a>
                     </td>

@@ -88,8 +88,8 @@ namespace SammysAuto.Controllers
                     }
 
 
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    //_logger.LogInformation("User logged in.");
+                   // return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

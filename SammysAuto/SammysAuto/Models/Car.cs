@@ -20,8 +20,8 @@ namespace SammysAuto.Models
         public string Style { get; set; }
         [Required]
         public int Year { get; set; }
-        public double Miles { get; set; }
         [Required]
+        public double Miles { get; set; }     
         public string Color { get; set; }
 
         public string UserId { get; set; }
